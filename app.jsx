@@ -35,7 +35,7 @@ function Player(props) {
                 {props.name}
             </div>
             <div className="player-score">
-                <Counter score={props.score} />
+                <Counter />
             </div>
         </div>
     )
@@ -47,28 +47,56 @@ Player.propTypes = {
 }
 
 var Counter = React.createClass({
-    propTypes: {
-        score: React.PropTypes.number.isRequired,
+    propTypes: {},
+
+    getInitialState: function() {
+        return {
+            score: 0,
+        }
     },
-    render: function() {
+
+    render: function () {
         return (
             <div className="counter">
                 <button className="counter-action decrement"> - </button>
-                <div className="counter-score"> {this.props.score} </div>
+                <div className="counter-score"> {this.state.score} </div>
                 <button className="counter-action increment"> + </button>
             </div>
         );
     }
 });
 
+/* new structure
+import PropTypes from 'prop-types';
+class Counter extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+        <div className="counter">
+            <button className="counter-action decrement"> - </button>
+            <div className="counter-score"> {this.props.score} </div>
+            <button className="counter-action increment"> + </button>
+        </div>
+    );
+  }
+} 
+
+Counter.propTypes = {
+    text: PropTypes.string.isRequired
+}
+*/
+
 function Application(props) {
     return (
         <div className="scoreboard">
             <Header title={props.title} />
             <div className="players">
-            {props.players.map(function (player) {
-                return <Player name={player.name} score={player.score} key={player.id}/>
-            })}
+                {props.players.map(function (player) {
+                    return <Player name={player.name} score={player.score} key={player.id} />
+                })}
             </div>
         </div>
     );
